@@ -312,17 +312,21 @@ router.get("/search-user", (req, res) => {
   }
   // Validate if user exist in our database
   searchUserBasedOnInput(search_input).then(response1 => {
-    if (response1.length >= 1) {
-      res.json({
+//     if (response1.length >= 1) {
+//       res.json({
+//         status: "200",
+//         response: response1,
+//       });
+//     } else {
+//       res.json({
+//         status: "401",
+//         response: "Error",
+//       });
+//     }
+     res.json({
         status: "200",
         response: response1,
       });
-    } else {
-      res.json({
-        status: "401",
-        response: "Error",
-      });
-    }
   });
 
 });
