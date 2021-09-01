@@ -26,16 +26,20 @@ var con = mysql.createConnection({
   database: "sql6433814"
 });
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+// con.connect(function (err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
 
 router.get("/", (req, res) => {
+  con.connect(function (err) {
+  if (err) throw err;
    res.json({
     hello: "hi!",
     Connected : "Connected"
   });
+});
+  
 });
 
 
