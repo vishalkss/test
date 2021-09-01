@@ -13,10 +13,25 @@ const jwt = require("jsonwebtoken");
 // const router = express.Router();
 // const app = express();
 const port = 8000;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
-});
+module.exports = {
+    mode: 'production',
+    target: 'node',
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    mangle: false
+                },
+            })
+        ],
+    }
+};
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}!`)
+// });
 
 
 var con = mysql.createConnection({
