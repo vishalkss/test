@@ -306,22 +306,19 @@ router.get("/search-user", async (req, res) => {
     res.status(400).send("All input is required");
   }
   // Validate if user exist in our database
-  await searchUserBasedOnInput(search_input).then(response1 => {
-//     if (response1.length >= 1) {
-//       res.json({
-//         status: "200",
-//         response: response1,
-//       });
-//     } else {
-//       res.json({
-//         status: "401",
-//         response: "Error",
-//       });
-//     }
-     res.json({
+  searchUserBasedOnInput(search_input).then(response1 => {
+    if (response1!=""&&response1.length >= 1) {
+      res.json({
         status: "200",
         response: response1,
       });
+    } else {
+      res.json({
+        status: "401",
+        response: "Error",
+      });
+    }
+     
   });
 
 });
