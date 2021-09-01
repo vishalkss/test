@@ -15,19 +15,6 @@ const jwt = require("jsonwebtoken");
 const port = 8000;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-module.exports = {
-    mode: 'production',
-    target: 'node',
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    mangle: false
-                },
-            })
-        ],
-    }
-};
 
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}!`)
@@ -406,3 +393,17 @@ app.use(`/.netlify/functions/api`, router);
 
 module.exports = app;
 module.exports.handler = serverless(app);
+
+module.exports = {
+    mode: 'production',
+    target: 'node',
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    mangle: false
+                },
+            })
+        ],
+    }
+};
