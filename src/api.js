@@ -13,12 +13,12 @@ const jwt = require("jsonwebtoken");
 // const router = express.Router();
 // const app = express();
 const port = 8000;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}!`)
-// });
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`)
+});
 
 
 var con = mysql.createConnection({
@@ -28,19 +28,16 @@ var con = mysql.createConnection({
   database: "sql6433814"
 });
 
-// con.connect(function (err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 router.get("/", (req, res) => {
-  con.connect(function (err) {
-  if (err) throw err;
-   res.json({
+  res.json({
     hello: "hi!",
     Connected : "Connected"
   });
-});
   
 });
 
