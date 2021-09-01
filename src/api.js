@@ -394,16 +394,3 @@ app.use(`/.netlify/functions/api`, router);
 module.exports = app;
 module.exports.handler = serverless(app);
 
-module.exports = {
-    mode: 'production',
-    target: 'node',
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                uglifyOptions: {
-                    mangle: false
-                },
-            })
-        ],
-    }
-};
