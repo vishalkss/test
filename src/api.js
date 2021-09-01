@@ -4,25 +4,8 @@ const serverless = require("serverless-http");
 const app = express();
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  var mysql = require('mysql');
+var mysql = require('mysql');
 
-var con = mysql.createConnection({
-  host: "sql6.freemysqlhosting.net",
-  user: "sql6433814",
-  password: "IuBCvY9U3l",
-  database: "sql6433814"
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-  res.json({
-    hello: "hi!",
-    Connected : "Connected"
-  });
-});
-});
 require("dotenv").config();
 // const express = require('express')
 const jwt = require("jsonwebtoken");
@@ -36,8 +19,6 @@ app.listen(port, () => {
 });
 
 
-var mysql = require('mysql');
-
 var con = mysql.createConnection({
   host: "sql6.freemysqlhosting.net",
   user: "sql6433814",
@@ -50,6 +31,13 @@ con.connect(function (err) {
   console.log("Connected!");
 });
 
+router.get("/", (req, res) => {
+   res.json({
+    hello: "hi!",
+    Connected : "Connected"
+  });
+});
+
 
 router.get("/creatDb", (req, res) => {
   con.query("CREATE DATABASE testdb", function (err, result) {
@@ -57,13 +45,6 @@ router.get("/creatDb", (req, res) => {
     res.send('testdb Database created');
   });
 })
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "testdb"
-});
 
 
 router.get('/createTables', function (req, res) {
