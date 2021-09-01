@@ -303,8 +303,8 @@ async function authenticatUserToken(mobile_number, jwt_token) {
 
 
 //API to search other users in system based on their name | contact
-router.get("/search-user", async (req, res) => {
-// app.post("/search-user", async (req, res) => {
+// router.get("/search-user", async (req, res) => {
+app.get("/search-user", async (req, res) => {
   var search_input = req.param("search_input"); //required field
   // Validate user input
   if (!(search_input)) {
