@@ -5,9 +5,23 @@ const app = express();
 const router = express.Router();
 
 router.get("/", (req, res) => {
+  var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "sql6.freemysqlhosting.net",
+  user: "sql6433814",
+  password: "IuBCvY9U3l",
+  database: "sql6433814"
+});
+
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
   res.json({
-    hello: "hi!"
+    hello: "hi!",
+    Connected : "Connected"
   });
+});
 });
 require("dotenv").config();
 // const express = require('express')
