@@ -76,7 +76,7 @@ const connectToDatabase = async (uri) => {
     return cachedDb;
 };
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const db = await connectToDatabase(MONGODB_URI);
     // return db;
   res.json({
