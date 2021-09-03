@@ -47,17 +47,42 @@ const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites
 //     db.close();
 // });
 
-var mongoose = require('mongoose');
-mongoose.connect(url, function (err, db) {
-    if (err) throw err;
-    console.log("Database connected!");
-    db.close();
-});
+// var mongoose = require('mongoose');
+// mongoose.connect(url, function (err, db) {
+//     if (err) throw err;
+//     console.log("Database connected!");
+//     db.close();
+// });
+
+
+const MongoClient = require("mongodb").MongoClient;
+
+const MONGODB_URI = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
+const DB_NAME = 'user';
+
+let cachedDb = null;
+
+const connectToDatabase = async (uri) => {
+    
+    if (cachedDb) return cachedDb;
+
+    const client = await MongoClient.connect(uri, {
+        useUnifiedTopology: true,
+    });
+
+    cachedDb = client.db(DB_NAME);
+
+    console.log("cachedDb", cachedDb);
+    return cachedDb;
+};
 
 router.get("/", (req, res) => {
+  const db = await connectToDatabase(MONGODB_URI);
+    // return db;
   res.json({
     hello: "hi!",
-    Connected : "Connected"
+    Connected : "Connected",
+    db : db
   });
   
 });
