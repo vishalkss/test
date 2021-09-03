@@ -21,16 +21,30 @@ app.listen(port, () => {
 });
 
 
-var con = mysql.createConnection({
-  host: "sql6.freemysqlhosting.net",
-  user: "sql6433814",
-  password: "IuBCvY9U3l",
-  database: "sql6433814"
-});
+// var con = mysql.createConnection({
+//   host: "sql6.freemysqlhosting.net",
+//   user: "sql6433814",
+//   password: "IuBCvY9U3l",
+//   database: "sql6433814"
+// });
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
+// con.connect(function (err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+// });
+
+
+var mongo = require('mongodb');
+
+var MongoClient = require('mongodb').MongoClient;
+// var url = "mongodb://localhost:27017/mydb";
+
+const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
+
+MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+    db.close();
 });
 
 router.get("/", (req, res) => {
@@ -42,25 +56,25 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/creatDb", (req, res) => {
-  con.query("CREATE DATABASE testdb", function (err, result) {
-    if (err) res.send('Error while creating testdb, Please check if mysql is running on the system');
-    res.send('testdb Database created');
-  });
-})
+// router.get("/creatDb", (req, res) => {
+//   con.query("CREATE DATABASE testdb", function (err, result) {
+//     if (err) res.send('Error while creating testdb, Please check if mysql is running on the system');
+//     res.send('testdb Database created');
+//   });
+// })
 
 
-router.get('/createTables', function (req, res) {
-  var sql = "CREATE TABLE users (name VARCHAR(255),mobile_number BIGINT(11), address VARCHAR(255), gender VARCHAR(255),country VARCHAR(255))";
-  con.query(sql, function (err, result) {
-    if (err) res.send('Error while creating tables, Please check if mysql is running on the system', err);
-    var primaryKeySql = "ALTER TABLE users CHANGE COLUMN'mobile_number' 'mobile_number' BIGINT(11) NOT NULL,ADD PRIMARY KEY('mobile_number')";
-    con.query(primaryKeySql, function (err, result) {
-      if (err) res.send('Error while creating tables, Please check if mysql is running on the system', err);
-      res.send("Table created");
-    });
-  });
-})
+// router.get('/createTables', function (req, res) {
+//   var sql = "CREATE TABLE users (name VARCHAR(255),mobile_number BIGINT(11), address VARCHAR(255), gender VARCHAR(255),country VARCHAR(255))";
+//   con.query(sql, function (err, result) {
+//     if (err) res.send('Error while creating tables, Please check if mysql is running on the system', err);
+//     var primaryKeySql = "ALTER TABLE users CHANGE COLUMN'mobile_number' 'mobile_number' BIGINT(11) NOT NULL,ADD PRIMARY KEY('mobile_number')";
+//     con.query(primaryKeySql, function (err, result) {
+//       if (err) res.send('Error while creating tables, Please check if mysql is running on the system', err);
+//       res.send("Table created");
+//     });
+//   });
+// })
 
 
 //API to register a user {name,contact,address,gender,country}
@@ -346,13 +360,25 @@ async function searchUserBasedOnInput(search_input) {
 
 searchUser = (search_input) => {
   return new Promise((resolve, reject) => {
-    var query = "SELECT * FROM users WHERE mobile_number like '" + search_input + "%'or name like '" + search_input + "%'";
-    con.query(query, (error, results) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(results);
-    });
+//     var query = "SELECT * FROM users WHERE mobile_number like '" + search_input + "%'or name like '" + search_input + "%'";
+//     con.query(query, (error, results) => {
+//       if (error) {
+//         return reject(error);
+//       }
+//       return resolve(results);
+//     });
+     MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("user");
+            var query = { $or: [{ "name": { $regex: ".*" + search_input + ".*" } }, { "mobile_number": { $regex: ".*" + search_input + ".*" } }] };
+            dbo.collection("user").find(query).toArray(function (error, results) {
+                   if (error) {
+                            return reject(error);
+                        }
+                     db.close();
+                    return resolve(results);
+            });
+        });
   });
 };
 
