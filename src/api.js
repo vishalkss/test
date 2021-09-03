@@ -34,26 +34,26 @@ app.listen(port, () => {
 // });
 
 
-var mongo = require('mongodb');
+// var mongo = require('mongodb');
 
-var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/mydb";
+// var MongoClient = require('mongodb').MongoClient;
+// // var url = "mongodb://localhost:27017/mydb";
 
-const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
+// const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
 
-MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    console.log("Database created!");
-    db.close();
-});
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     console.log("Database created!");
+//     db.close();
+// });
 
-router.get("/", (req, res) => {
-  res.json({
-    hello: "hi!",
-    Connected : "Connected"
-  });
+// router.get("/", (req, res) => {
+//   res.json({
+//     hello: "hi!",
+//     Connected : "Connected"
+//   });
   
-});
+// });
 
 
 // router.get("/creatDb", (req, res) => {
