@@ -39,7 +39,7 @@ app.listen(port, () => {
 // var MongoClient = require('mongodb').MongoClient;
 // // var url = "mongodb://localhost:27017/mydb";
 
-// const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
+const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority";
 
 // MongoClient.connect(url, function (err, db) {
 //     if (err) throw err;
@@ -47,6 +47,12 @@ app.listen(port, () => {
 //     db.close();
 // });
 
+var mongoose = require('mongoose');
+mongoose.connect(url, function (err, db) {
+    if (err) throw err;
+    console.log("Database connected!");
+    db.close();
+});
 
 router.get("/", (req, res) => {
   res.json({
