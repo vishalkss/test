@@ -47,13 +47,13 @@ app.listen(port, () => {
 //     db.close();
 // });
 
-// router.get("/", (req, res) => {
-//   res.json({
-//     hello: "hi!",
-//     Connected : "Connected"
-//   });
+router.get("/", (req, res) => {
+  res.json({
+    hello: "hi!",
+    Connected : "Connected"
+  });
   
-// });
+});
 
 
 // router.get("/creatDb", (req, res) => {
