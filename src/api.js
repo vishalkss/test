@@ -48,27 +48,6 @@ app.listen(port, () => {
 // });
 
 
-const MongoClient = require('mongodb').MongoClient
-
-const {
-  "user",
-  "cluster0.lschs.mongodb.net",
-  "user",
-  "user",
-} = auths.mongodb
-
-const url = "mongodb+srv://user:user@cluster0.lschs.mongodb.net/user?retryWrites=true&w=majority"
-const client = await MongoClient.connect(url, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-})
-
-const db = client.db(database)
-// Enter your target collection as a parameter to this step
-this.res = await db.collection(params.collection).insertOne({ name: "Luke Skywalker" })
-
-await client.close()
-
 router.get("/", (req, res) => {
   res.json({
     hello: "hi!",
